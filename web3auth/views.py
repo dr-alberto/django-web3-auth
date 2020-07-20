@@ -68,7 +68,7 @@ def signup_api(request):
         setattr(user, addr_field, form.cleaned_data[addr_field])
         user.save()
         login(request, user, 'web3auth.backend.Web3Backend')
-        return JsonResponse({'success': True, 'redirect_url': get_redirect_url(request)})
+        return JsonResponse({'success': True, 'redirect_url': redirect('login_api')}) #get_redirect_url(request)
     else:
         return JsonResponse({'success': False, 'error': json.loads(form.errors.as_json())})
 
@@ -99,7 +99,7 @@ def signup_view(request, template_name='web3auth/signup.html'):
                 setattr(user, addr_field, form.cleaned_data[addr_field])
                 user.save()
                 login(request, user, 'web3auth.backend.Web3Backend')
-                return redirect(get_redirect_url(request))
+                return redirect('login_api')
     return render(request,
                   template_name,
                   {'form': form})
